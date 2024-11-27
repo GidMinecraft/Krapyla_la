@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Магия Улыбок</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(45deg, #ff6fb1, #ff89f5, #9c6ff0, #6a88f3);
+            background-size: 400% 400%;
+            animation: gradientAnimation 5s ease infinite;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        h1 {
+            color: white;
+            font-size: 3.5rem;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.7), 0 0 25px rgba(255, 255, 255, 0.7);
+            letter-spacing: 2px;
+            margin-bottom: 40px;
+            animation: bounce 1s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-15px);
+            }
+            60% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .button {
+            font-size: 1.5rem;
+            background-color: #ff8c9d;
+            color: white;
+            padding: 20px 40px;
+            border: none;
+            border-radius: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .button::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300%;
+            height: 300%;
+            background: #ff89f5;
+            border-radius: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            transition: transform 0.3s ease;
+        }
+
+        .button:hover::after {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .message {
+            font-size: 1.8rem;
+            color: #ffffff;
+            margin-top: 30px;
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .star {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background-color: #fff;
+            border-radius: 50%;
+            opacity: 0;
+            animation: starAnimation 2s linear infinite;
+        }
+
+        @keyframes starAnimation {
+            0% { transform: translate(0, 0); opacity: 1; }
+            100% { transform: translate(300px, 300px); opacity: 0; }
+        }
+
+        .heart {
+            font-size: 60px;
+            color: #ff6fb1;
+            animation: heartbeat 1s ease-in-out infinite;
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <h1>Крапочка 🥰</h1>
+
+    <div class="stars" id="stars-container"></div>
+
+    <button class="button" id="magic-button">
+        Открой магию!
+        <div class="heart">💖</div>
+    </button>
+
+    <p class="message" id="magic-message">Ты невероятная! ✨</p>
+
+    <script>
+        // Генерация случайных звезд
+        function generateStars() {
+            const starsContainer = document.getElementById('stars-container');
+            for (let i = 0; i < 50; i++) {
+                let star = document.createElement('div');
+                star.classList.add('star');
+                star.style.left = `${Math.random() * 100}vw`;
+                star.style.top = `${Math.random() * 100}vh`;
+                starsContainer.appendChild(star);
+            }
+        }
+
+        generateStars();
+
+        // Массив с комплиментами
+        const compliments = [
+            "Ты как лучик солнца в облачном небе.",
+            "Твоя улыбка — это настоящее волшебство.",
+            "Ты приносишь в этот мир столько света и тепла.",
+            "Каждый день с тобой — это маленькое чудо.",
+            "Ты обладаешь невероятной харизмой.",
+            "В твоих глазах скрыта целая вселенная.",
+            "Ты всегда знаешь, как сделать мой день лучше.",
+            "С тобой мир становится ярче и интереснее.",
+            "Ты умеешь быть самой собой, и это прекрасно.",
+            "Ты — вдохновение для окружающих.",
+            "Ты — воплощение доброты и гармонии.",
+            "С тобой даже самые обычные моменты превращаются в нечто особенное.",
+            "В тебе есть что-то, что невозможно не заметить.",
+            "Ты — как самый красивый стих, который хочется читать снова и снова.",
+            "Ты создаешь атмосферу комфорта и уюта.",
+            "Ты — как луч света в темном лесу.",
+            "С тобой все становится легче и веселее.",
+            "Твой взгляд может растопить лед.",
+            "Твои слова всегда поддерживают и вдохновляют.",
+            "Ты — источник позитивной энергии, с тобой всегда легко."
+        ];
+
+        let currentComplimentIndex = 0;
+
+        // Функция для изменения комплимента
+        function changeCompliment() {
+            const message = document.getElementById('magic-message');
+            message.textContent = compliments[currentComplimentIndex];
+            message.style.opacity = 0;
+
+            // Плавная анимация
+            setTimeout(() => {
+                message.style.opacity = 1;
+            }, 100);
+
+            // Переход к следующему комплименту
+            currentComplimentIndex = (currentComplimentIndex + 1) % compliments.length;
+        }
+
+        // При нажатии на кнопку меняем комплимент
+        const button = document.getElementById('magic-button');
+        button.addEventListener('click', changeCompliment);
+
+        // Инициализация страницы
+        changeCompliment();
+    </script>
+</body>
+</html>
